@@ -12,7 +12,7 @@ if ($_POST && !$_GET):
             "nombre_completo" => $_POST["txtPrimerNombre"] . " " . $_POST["txtPrimerApellido"]
         );
         $userCon->registrarUsuario($newUser);
-        header("Location: index.php");
+        header("Location: ../index.php");
         endif;
 endif;
 if ($_POST && $_GET):
@@ -29,7 +29,7 @@ if ($_POST && $_GET):
         );
         print_r($updateUser);
         $userCon->actualizarUsuario($id, $updateUser);
-        header("Location: index.php");
+        header("Location: ../index.php");
     endif;
 endif;
 if ($_GET):
@@ -38,7 +38,7 @@ if ($_GET):
     $origen = $_GET['origen'];
     if ($action === "delete" && $origen === "user"):
         $userCon->eliminarUsuario($id);
-        header("Location: index.php");
+        header("Location: ../index.php");
     endif;
     if ($action === "update" && $origen === "user"):
         $userUpdate = $userCon->obtenerUsuario($id);

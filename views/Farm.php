@@ -30,7 +30,7 @@ try {
             $farmCon->registrarFinca($newFarm);
 
             header_remove();
-            header("Location: index.php");
+            header("Location: ../index.php");
         endif;
     endif;
 
@@ -58,7 +58,7 @@ try {
             $farmCon->actualizarFinca($id, $updateFarm);
 
             header_remove();
-            header("Location: index.php");
+            header("Location: ../index.php");
         endif;
     endif;
 
@@ -71,7 +71,7 @@ try {
             $farmCon->eliminarFinca($id);
 
             header_remove();
-            header("Location: index.php");
+            header("Location: ../index.php");
         endif;
         if ($action === "update"):
             $farmUpdate = $farmCon->obtenerFinca($id);
