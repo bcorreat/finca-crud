@@ -1,5 +1,5 @@
 <?php
-require_once 'php-activerecord/activerecord.php';
+require_once 'php-activerecord/ActiveRecord.php';
 // $con = 'mysql://username:password@localhost/database_name'
 
 activerecord\config::initialize(function ($cfg) {
