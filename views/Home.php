@@ -4,19 +4,23 @@ $userCon = new userController();
 $users = $userCon->obtenerUsuarios();
 
 if ($_POST && !$_GET):
-    $newUser = array(
-        "nombre" => $_POST["txtPrimerNombre"],
-        "apellido" => $_POST["txtPrimerApellido"],
-        "email" => $_POST["txtEmail"],
-        "nombre_completo" => $_POST["txtPrimerNombre"] . " " . $_POST["txtPrimerApellido"]
-    );
-    $userCon->registrarUsuario($newUser);
-    header("Location: index.php");
+    if ($_POST['txtOrigen'] === "user"):
+        $newUser = array(
+            "nombre" => $_POST["txtPrimerNombre"],
+            "apellido" => $_POST["txtPrimerApellido"],
+            "email" => $_POST["txtEmail"],
+            "nombre_completo" => $_POST["txtPrimerNombre"] . " " . $_POST["txtPrimerApellido"]
+        );
+        $userCon->registrarUsuario($newUser);
+        header("Location: index.php");
+        endif;
 endif;
 if ($_POST && $_GET):
     $action = $_GET['action'];
     $id = $_GET['id'];
-    if ($action === "update"):
+    $origen = $_GET['origen'];
+
+    if ($action === "update" && $origen === "user"):
         $updateUser = array(
             "nombre" => $_POST["txtPrimerNombre"],
             "apellido" => $_POST["txtPrimerApellido"],
@@ -31,11 +35,12 @@ endif;
 if ($_GET):
     $id = $_GET['id'];
     $action = $_GET['action'];
-    if ($action === "delete"):
+    $origen = $_GET['origen'];
+    if ($action === "delete" && $origen === "user"):
         $userCon->eliminarUsuario($id);
         header("Location: index.php");
     endif;
-    if ($action === "update"):
+    if ($action === "update" && $origen === "user"):
         $userUpdate = $userCon->obtenerUsuario($id);
     endif;
 endif;
@@ -48,14 +53,14 @@ endif;
                 <i class="material-icons right">
                     add_circle_outline
                 </i>
-                Agregar numero usuario
+                Agregar nuevo usuario
             </a>
         </div>
     <?php endif; ?>
 
     <?php
     if ($_GET):
-        if ($_GET['action'] === "update"):
+        if ($_GET['action'] === "update" && $_GET['origen'] === "user"):
             ?>
             <div class="">
                 <h4>Actualizar Usuario</h4>
@@ -101,7 +106,7 @@ endif;
                         <div class="row">
                             <div class="col s12">
                                 <button class="waves-effect waves-light btn" type="submit">Guardar</button>
-                                <a class="waves-effect red btn" href="index.php">Cancelar</a>
+                                <a class="waves-effect red btn" href="index.php#test2">Cancelar</a>
                             </div>
                         </div>
                     </form>
@@ -136,7 +141,7 @@ endif;
                     <td>
                         <a
                                 class="waves-effect waves-light btn red"
-                                href="index.php?id=<?php echo $item->id ?>&action=delete"
+                                href="index.php?id=<?php echo $item->id ?>&action=delete&origen=user#test2"
                         >
                             <i class="material-icons center">
                                 delete
@@ -144,7 +149,7 @@ endif;
                         </a>
                         <a
                                 class="waves-effect waves-light btn orange"
-                                href="index.php?id=<?php echo $item->id ?>&action=update"
+                                href="index.php?id=<?php echo $item->id ?>&action=update&origen=user#test2"
                         >
                             <i class="material-icons center">
                                 create
@@ -165,6 +170,13 @@ endif;
             <h4>Registrar Usuario</h4>
             <div class="row margin-top-20px">
                 <form class="col s12" method="POST">
+                    <input
+                            name="txtOrigen"
+                            type="text"
+                            class="hide"
+                            value="user"
+                            required
+                    >
                     <div class="row">
                         <div class="input-field col s6">
                             <input
