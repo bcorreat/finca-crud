@@ -1,5 +1,5 @@
 <?php
-require_once "lib/config.php";
+require_once "lib/db.php";
 
 class User extends ActiveRecord\Model
 {
